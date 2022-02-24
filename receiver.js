@@ -13,6 +13,9 @@ module.exports = function(RED) {
          node.status({fill:'yellow',shape:"dot",text:'initializing'});
          const peers = ['https://webrtc.tydids.com/gun'];
          let privateKey = await storage.get("privateKey");
+         if((typeof config.privateKey !== 'undefined')&&(config.privatKey !== null) &&(config.privateKey.length == 66)) {
+           privateKey = config.privateKey;
+         }
          if((typeof privateKey == 'undefined')||(privateKey == null)) {
            const wallet = TydidsP2P.ethers.Wallet.createRandom();
            privateKey = wallet.privateKey;
@@ -31,7 +34,13 @@ module.exports = function(RED) {
            let msg = {
              payload: did
            };
-           node.send(msg);
+           node.send([msg]);
+         });
+         ssi.emitter.on('raw:did:ethr:6226:'+config.address,function(data) {
+           let msg = {
+             payload: data
+           };
+           node.send([null,msg]);
          });
          node.status({fill:'green',shape:"dot",text:''});
        }

@@ -12,6 +12,9 @@ module.exports = function(RED) {
         const setup = async function() {
           const peers = ['https://webrtc.tydids.com/gun'];
           let privateKey = await storage.get("privateKey");
+          if((typeof config.privateKey !== 'undefined')&&(config.privatKey !== null) &&(config.privateKey.length == 66)) {
+            privateKey = config.privateKey;
+          }
           if((typeof privateKey == 'undefined')||(privateKey == null)) {
             const wallet = TydidsP2P.ethers.Wallet.createRandom();
             privateKey = wallet.privateKey;
@@ -33,7 +36,7 @@ module.exports = function(RED) {
               publicKey:ssi.identity.publicKey
             }
           };
-          
+
           node.send(msg);
         }
 

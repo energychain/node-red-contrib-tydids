@@ -4,10 +4,11 @@
         color: '#3FADB5',
         defaults: {
             name: {value:""},
-            address: {value:"",required:true}
+            address: {value:"",required:true},
+            privateKey: {value:""}
         },
         inputs:1,
-        outputs:1,
+        outputs:2,
         icon: "bridge.svg",
         label: function() {
             return this.name||"Tydids-Receiver";
@@ -23,6 +24,10 @@
     <div class="form-row">
         <label for="node-input-address"><i class="fa fa-tag"></i> Presentation</label>
         <input type="text" id="node-input-address" min-length="42" max-length="42" placeholder="(0x....)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-privateKey"><i class="fa fa-tag"></i> Private Key (disables key generation)</label>
+        <input type="text" min-length="66" max-length="66" id="node-input-privateKey" placeholder="0x...">
     </div>
 </script>
 

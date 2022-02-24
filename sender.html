@@ -3,7 +3,8 @@
         category: 'P2P Network',
         color: '#3FADB5',
         defaults: {
-            name: {value:""}
+            name: {value:""},
+            privateKey: {value:""}
         },
         inputs:1,
         outputs:1,
@@ -18,6 +19,10 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-privateKey"><i class="fa fa-tag"></i> Private Key (disables key generation)</label>
+        <input type="text" min-length="66" max-length="66" id="node-input-privateKey" placeholder="0x...">
     </div>
 </script>
 
