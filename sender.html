@@ -1,0 +1,26 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Tydids-Sender',{
+        category: 'P2P Network',
+        color: '#3FADB5',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name||"Tydids-Sender";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Tydids-Sender">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="Tydids-Sender">
+    <p>Created a Sender instance Outputs Identity Information to use with TyDIDs-Receiver Node</p>
+</script>

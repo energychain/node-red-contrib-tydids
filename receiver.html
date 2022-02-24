@@ -1,0 +1,31 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Tydids-Receiver',{
+        category: 'P2P Network',
+        color: '#3FADB5',
+        defaults: {
+            name: {value:""},
+            address: {value:"",required:true}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name||"Tydids-Receiver";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Tydids-Receiver">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="fa fa-tag"></i> Presentation</label>
+        <input type="text" id="node-input-address" min-length="42" max-length="42" placeholder="(0x....)">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="Tydids-Receiver">
+    <p>Creates a DID Receiver. Will output a msg.payload on update.</p>
+</script>

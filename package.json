@@ -1,0 +1,39 @@
+{
+  "name": "node-red-contrib-tydids",
+  "version": "0.5.1",
+  "description": "TyDIDs-P2P Communication using Decentralized Identity Presentations for edge to edge data exchange.",
+  "main": "tydids.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/energychain/node-red-contrib-tydids.git"
+  },
+  "keywords": [
+    "tydids",
+    "decentralized",
+    "identity",
+    "did",
+    "identity",
+    "edge",
+    "p2p",
+    "data",
+    "node-red"
+  ],
+  "author": "STROMDAO GmbH <dev@stromdao.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/energychain/node-red-contrib-tydids/issues"
+  },
+  "homepage": "https://github.com/energychain/node-red-contrib-tydids#readme",
+  "dependencies": {
+    "tydids-p2p": "^0.5.11"
+  },
+  "node-red": {
+    "nodes": {
+      "Tydids-Sender": "sender.js",
+      "Tydids-Receiver": "receiver.js"
+    }
+  }
+}
