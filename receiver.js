@@ -37,11 +37,13 @@ module.exports = function(RED) {
        }
 
        node.on('input', async function(msg) {
-         let did = await ssi.retrieveVP(config.address);
-         let sendmsg = {
-           payload: did
-         };
-         node.send(sendmsg);
+         if(config == null) { return } else {
+           let did = await ssi.retrieveVP(config.address);
+           let sendmsg = {
+             payload: did
+           };
+           node.send(sendmsg);
+         }
        });
 
        setup();
