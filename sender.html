@@ -4,7 +4,8 @@
         color: '#3FADB5',
         defaults: {
             name: {value:""},
-            privateKey: {value:""}
+            address: {value:""},
+            privateKey: {value:""},
         },
         inputs:1,
         outputs:1,
@@ -19,6 +20,10 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="fa fa-tag"></i> Presentation (disabled generation)</label>
+        <input type="text" id="node-input-address" min-length="42" max-length="42" placeholder="(0x....)">
     </div>
     <div class="form-row">
         <label for="node-input-privateKey"><i class="fa fa-tag"></i> Private Key (disables key generation)</label>

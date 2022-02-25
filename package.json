@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-tydids",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "TyDIDs-P2P Communication using Decentralized Identity Presentations for edge to edge data exchange.",
   "main": "tydids.js",
   "scripts": {
@@ -30,7 +30,11 @@
   "dependencies": {
     "tydids-p2p": "^0.6.6"
   },
+  "engines": {
+      "node": ">=14.0.0"
+   },
   "node-red": {
+    "version": ">=2.0.0",
     "nodes": {
       "Tydids-Sender": "sender.js",
       "Tydids-Receiver": "receiver.js"

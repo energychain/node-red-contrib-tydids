@@ -23,11 +23,15 @@ module.exports = function(RED) {
           ssi = await TydidsP2P.ssi(privateKey);
           storage.set("address",ssi.identity.address);
           storage.set("publicKey",ssi.identity.publicKey);
-          mc = await storage.get("mc");
+          mc = await storage.get("presentation");
+          if((typeof config.address !== 'undefined')&&(config.address !== null) &&(config.address.length == 42)) {
+            mc = config.address;
+            storage.set("presentation",mc);
+          }
           if((typeof mc == 'undefined') || (mc == null)) {
             let vp = await ssi.createManagedPresentation();
             mc = vp.address;
-            storage.set("mc",mc);
+            storage.set("presentation",mc);
           }
           let msg = {
             payload: {
