@@ -26,22 +26,26 @@ module.exports = function(RED) {
          storage.set("publicKey",ssi.identity.publicKey);
 
          let did = await ssi.retrieveVP(config.address);
-         let msg = {
-           payload: did
-         };
-         node.send(msg);
-         ssi.emitter.on('did:ethr:6226:'+config.address,function(data) {
-           let msg = {
-             payload: did
-           };
-           node.send([msg]);
-         });
-         ssi.emitter.on('raw:did:ethr:6226:'+config.address,function(data) {
-           let msg = {
-             payload: data
-           };
-           node.send([null,msg]);
-         });
+         let lastValue = JSON.stringify(await storage.get("lastValue"));
+         if(lastValue !== JSON.stringify(did)) {
+             let msg = {
+               payload: did
+             };
+             node.send(msg);
+             ssi.emitter.on('did:ethr:6226:'+config.address,function(data) {
+               let msg = {
+                 payload: did
+               };
+               node.send([msg]);
+             });
+             ssi.emitter.on('raw:did:ethr:6226:'+config.address,function(data) {
+               let msg = {
+                 payload: data
+               };
+               node.send([null,msg]);
+             });
+             storage.set("lastValue",JSON.stringify(did));
+         }
          node.status({fill:'green',shape:"dot",text:''});
        }
 
