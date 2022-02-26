@@ -8,8 +8,6 @@
 [![npm](https://img.shields.io/npm/v/node-red-contrib-tydids.svg)](https://www.npmjs.com/package/node-red-contrib-tydids)
 [![CO2Offset](https://api.corrently.io/v2.0/ghgmanage/statusimg?host=node-red-contrib-tydids&svg=1)](https://co2offset.io/badge.html?host=node-red-contrib-tydids)
 
-[![Try in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/energychain/node-red-contrib-tydids)
-
 
 Imagine a dataset that is available somewhere in the world might be accessed everywhere. How? You just need to know its address.
 - Decide who is allowed to see this dataset.
