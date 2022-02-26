@@ -34,7 +34,7 @@ module.exports = function(RED) {
              node.send(msg);
              ssi.emitter.on('did:ethr:6226:'+config.address,function(data) {
                let msg = {
-                 payload: did
+                 payload: data
                };
                node.send([msg]);
              });
@@ -44,7 +44,7 @@ module.exports = function(RED) {
                };
                node.send([null,msg]);
              });
-             storage.set("lastValue",JSON.stringify(did));
+             await storage.set("lastValue",JSON.stringify(did));
          }
          node.status({fill:'green',shape:"dot",text:''});
        }
