@@ -54,6 +54,7 @@ module.exports = function(RED) {
             if(typeof msg.payload !== 'object') msg.payload = {
               value:msg.payload
             };
+            // Hier brauchen wir noch eine "Vorfahrenerkennung", um den _successor Wert als _ancestor weiterzugeben oder umgekehrt!
             await ssi.updateVP(mc,msg.payload,{},{});
             node.status({fill:'green',shape:"dot",text:mc});
         });
