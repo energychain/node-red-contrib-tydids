@@ -25,7 +25,7 @@ module.exports = function(RED) {
          storage.set("address",ssi.identity.address);
          storage.set("publicKey",ssi.identity.publicKey);
 
-         let did = await ssi.retrieveVP(config.address);
+         let did = await ssi.retrievePresentation(config.address);
          let lastValue = JSON.stringify(await storage.get("lastValue"));
          if(lastValue !== JSON.stringify(did)) {
              let msg = {
@@ -51,7 +51,7 @@ module.exports = function(RED) {
 
        node.on('input', async function(msg) {
          if((config == null)||(ssi == null)) { return } else {
-           let did = await ssi.retrieveVP(config.address);
+           let did = await ssi.retrievePresentation(config.address);
            let sendmsg = {
              payload: did
            };

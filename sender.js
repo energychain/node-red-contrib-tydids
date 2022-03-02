@@ -28,10 +28,17 @@ module.exports = function(RED) {
             mc = config.address;
             storage.set("presentation",mc);
           }
+          let setupStart = storage.get("_presentationSetup");
           if((typeof mc == 'undefined') || (mc == null)) {
-            let vp = await ssi.createManagedPresentation();
-            mc = vp.address;
-            storage.set("presentation",mc);
+            if((typeof setupStart == 'undefined') || (mc == null)) {
+              ssi.emitter.on('cMP',function(data) {
+                console.log(data);
+              });
+              await storage.set("_presentationSetup",new Date().getTime());
+              let vp = await ssi.createPresentation();
+              mc = vp.address;
+              storage.set("presentation",mc);
+            }
           }
           let msg = {
             payload: {
@@ -55,7 +62,7 @@ module.exports = function(RED) {
               value:msg.payload
             };
             // Hier brauchen wir noch eine "Vorfahrenerkennung", um den _successor Wert als _ancestor weiterzugeben oder umgekehrt!
-            await ssi.updateVP(mc,msg.payload,{},{});
+            await ssi.updatePresentation(mc,msg.payload,{},{});
             node.status({fill:'green',shape:"dot",text:mc});
         });
 
