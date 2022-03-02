@@ -62,7 +62,7 @@ module.exports = function(RED) {
               value:msg.payload
             };
             // Hier brauchen wir noch eine "Vorfahrenerkennung", um den _successor Wert als _ancestor weiterzugeben oder umgekehrt!
-            await ssi.updatePresentation(mc,msg.payload,{},{});
+            await ssi.updatePresentation(mc,msg.payload,true);
             node.status({fill:'green',shape:"dot",text:mc});
         });
 
