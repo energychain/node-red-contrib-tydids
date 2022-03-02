@@ -24,8 +24,9 @@ module.exports = function(RED) {
          ssi = await TydidsP2P.ssi(privateKey);
          storage.set("address",ssi.identity.address);
          storage.set("publicKey",ssi.identity.publicKey);
+         let revision = await storage.get("revision");
 
-         let did = await ssi.retrievePresentation(config.address);
+         let did = await ssi.retrievePresentation(config.address,revision);
          let lastValue = JSON.stringify(await storage.get("lastValue"));
          if(lastValue !== JSON.stringify(did)) {
              let msg = {
@@ -37,6 +38,9 @@ module.exports = function(RED) {
                  payload: data
                };
                node.send([msg]);
+               if(typeof msg.payload['_revision'] !== 'undefined') {
+                 storage.set("revision",msg.payload['_revision']);
+               }
              });
              ssi.emitter.on('raw:did:ethr:6226:'+config.address,function(data) {
                let msg = {
