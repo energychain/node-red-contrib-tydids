@@ -13,6 +13,10 @@
         icon: "bridge.svg",
         label: function() {
             return this.name||"Tydids-Sender";
+        },
+        oneditprepare: async function() {
+          var node = this;
+          $('#node-input-address').val(node.status.text)
         }
     });
 </script>
@@ -23,7 +27,7 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-address"><i class="fa fa-tag"></i> Presentation (disabled generation)</label>
+        <label for="node-input-address"><i class="fa fa-tag"></i> Presentation (disables generation)</label>
         <input type="text" id="node-input-address" min-length="42" max-length="42" placeholder="(0x....)">
     </div>
     <div class="form-row">
