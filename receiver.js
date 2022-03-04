@@ -42,9 +42,15 @@ module.exports = function(RED) {
                  payload: data
                };
 
-               sendMsg(msg);
+               sendMsg([msg]);
          });
-
+         ssi.emitter.on('presentation:ethr:6226:'+config.address,function(data) {
+              node.status({fill:'green',shape:"dot",text:new Date().toUTCString()});
+               let msg = {
+                 payload: data
+               };
+               sendMsg([null,msg]);
+         });
          // add wait for revision?
        }
 
