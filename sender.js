@@ -20,29 +20,12 @@ module.exports = function(RED) {
             privateKey = wallet.privateKey;
             await storage.set("privateKey",privateKey);
           }
-          ssi = await TydidsP2P.ssi(privateKey);
+          ssi = await TydidsP2P.ssi(privateKey,true);
           storage.set("address",ssi.identity.address);
           storage.set("publicKey",ssi.identity.publicKey);
-          mc = await storage.get("presentation");
-          if((typeof config.address !== 'undefined')&&(config.address !== null) &&(config.address.length == 42)) {
-            mc = config.address;
-            storage.set("presentation",mc);
-          }
-          let setupStart = storage.get("_presentationSetup");
-          if((typeof mc == 'undefined') || (mc == null)) {
-            if((typeof setupStart == 'undefined') || (mc == null)) {
-              ssi.emitter.on('cMP',function(data) {
-                console.log(data);
-              });
-              await storage.set("_presentationSetup",new Date().getTime());
-              let vp = await ssi.createPresentation();
-              mc = vp.address;
-              storage.set("presentation",mc);
-            }
-          }
+
           let msg = {
             payload: {
-              presentation:mc,
               identity:ssi.identity.address,
               publicKey:ssi.identity.publicKey
             }
@@ -53,17 +36,15 @@ module.exports = function(RED) {
 
         node.on('input', async function(msg) {
             node.status({fill:'yellow',shape:"dot",text:'initializing'});
-            while((ssi == null)||(mc == null)) {
-              console.log("Tydids-Sender:Waiting for auto-setup to finish.");
-              await sleep(1000);
+            while(ssi == null) {
+              await sleep(100);
             }
-            node.status({fill:'red',shape:"dot",text:mc});
+            node.status({fill:'red',shape:"dot",text:ssi.identity.address});
             if(typeof msg.payload !== 'object') msg.payload = {
               value:msg.payload
             };
-            // Hier brauchen wir noch eine "Vorfahrenerkennung", um den _successor Wert als _ancestor weiterzugeben oder umgekehrt!
-            await ssi.updatePresentation(mc,msg.payload,true);
-            node.status({fill:'green',shape:"dot",text:mc});
+            await ssi.updatePresentation(msg.payload);
+            node.status({fill:'green',shape:"dot",text:ssi.identity.address});
         });
 
         setup();
