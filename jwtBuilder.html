@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Tydids-JWTBuilder',{
+        category: 'P2P Network',
+        color: '#3FADB5',
+        defaults: {
+            name: {value:""},
+            privateKey: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name||"Tydids-JWTBuilder";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Tydids-JWTBuilder">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-privateKey"><i class="fa fa-tag"></i> Private Key (disables key generation)</label>
+        <input type="text" min-length="66" max-length="66" id="node-input-privateKey" placeholder="0x...">
+    </div>
+
+</script>
+
+<script type="text/html" data-help-name="Tydids-JWTBuilder">
+    <p>Builds a plane JWT-DID to use offline (eq. no P2P distribution). Might be used as input of <strong>Tydids-JWTPresentation</strong></p>
+</script>

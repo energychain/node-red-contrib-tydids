@@ -7,8 +7,8 @@
             address: {value:"",required:true},
             privateKey: {value:""}
         },
-        inputs:0,
-        outputs:2,
+        inputs:1,
+        outputs:4,
         icon: "bridge.svg",
         label: function() {
             return this.name||"Tydids-Receiver";
@@ -29,5 +29,8 @@
 </script>
 
 <script type="text/html" data-help-name="Tydids-Receiver">
-    <p>Creates a DID Receiver. Will output a msg.payload on update.</p>
+    <p>
+      Creates a DID Receiver. In case an update is received this event will be made available as `output[0]` (payload only) and output[1]` (full DID).
+      Same for `output[2]` and `output[3]` that will return last payload/DID received as soon as triggered by an input.
+    </p>
 </script>

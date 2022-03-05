@@ -16,3 +16,5 @@ Imagine a dataset that is available somewhere in the world might be accessed eve
 - Subscribe to changes with another single line of code
 
 ## This is TyDIDs.
+
+[![Sample usage](https://img.youtube.com/vi/i7t4hL1DkLo/0.jpg)](https://www.youtube.com/watch?v=i7t4hL1DkLo)

@@ -1,0 +1,27 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Tydids-JWTPresentation',{
+        category: 'P2P Network',
+        color: '#3FADB5',
+        defaults: {
+            name: {value:""},
+        },
+        inputs:1,
+        outputs:2,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name||"Tydids-JWTPresentation";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="Tydids-JWTPresentation">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-tips"><b>Tip:</b> Use field <code>jwt</code> of <strong>TyDIDS-Receiver</strong> (output[1] or [3]) as input <code>msg.payload</code>.</div>
+</script>
+
+<script type="text/html" data-help-name="Tydids-JWTPresentation">
+    <p>Resolves a DID in a JWT and returns full resolution as <code>msg.payload</code>. Accepts Input <code>msg.payload</code> or <code>msg.payload.jwt</code>  as JWT-String</p>
+</script>

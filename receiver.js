@@ -7,8 +7,8 @@ module.exports = function(RED) {
        const node = this;
        const storage = node.context();
        let ssi = null;
-       let mc = null;
-
+       let msg0 = null;
+       let msg1 = null;
        const setup = async function() {
          node.status({fill:'yellow',shape:"dot",text:'initializing'});
          const peers = ['https://webrtc.tydids.com/gun'];
@@ -41,7 +41,7 @@ module.exports = function(RED) {
                let msg = {
                  payload: data
                };
-
+               msg0 = msg;
                sendMsg([msg]);
          });
          ssi.emitter.on('presentation:ethr:6226:'+config.address,function(data) {
@@ -49,19 +49,14 @@ module.exports = function(RED) {
                let msg = {
                  payload: data
                };
+               msg1 = msg;
                sendMsg([null,msg]);
          });
          // add wait for revision?
        }
 
        node.on('input', async function(msg) {
-         if((config == null)||(ssi == null)) { return } else {
-           let did = await ssi.retrievePresentation(config.address);
-           let sendmsg = {
-             payload: did
-           };
-           node.send(sendmsg);
-         }
+           node.send([null,null,msg0,msg1]);
        });
 
        setup();
