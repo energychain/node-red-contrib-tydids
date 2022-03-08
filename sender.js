@@ -30,9 +30,13 @@ module.exports = function(RED) {
               publicKey:ssi.identity.publicKey
             }
           };
+          ssi.onReceivedACK(function(from,did) {
+            node.send(did);
+            node.status({fill:'green',shape:"dot",text:ssi.identity.address});
+          })
 
-          node.send(msg);
         }
+
 
         node.on('input', async function(msg) {
             node.status({fill:'yellow',shape:"dot",text:'initializing'});
@@ -43,11 +47,19 @@ module.exports = function(RED) {
             if(typeof msg.payload !== 'object') msg.payload = {
               value:msg.payload
             };
-            await ssi.updatePresentation(msg.payload);
-            node.status({fill:'green',shape:"dot",text:ssi.identity.address});
+            if(typeof msg.payload.payload !== 'undefined') msg.payload = msg.payload.payload;
+            if(
+              (typeof msg.payload._address !== 'undefined')&&(typeof msg.payload._revision !== 'undefined')
+            ) {
+              await ssi.replyPresentation(msg.payload._address,msg.payload._revision,msg.payload);
+            } else {
+              await ssi.updatePresentation(msg.payload);
+            }
+            node.status({fill:'white',shape:"dot",text:ssi.identity.address});
         });
 
         setup();
+        setInterval(setup,60000);
     }
     RED.nodes.registerType("Tydids-Sender",SenderNode);
 }

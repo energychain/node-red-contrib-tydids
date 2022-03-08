@@ -2,6 +2,7 @@ module.exports = function(RED) {
     function ReceiverNode(config) {
       const TydidsP2P = require("tydids-p2p");
       const sleep = ms => new Promise(r => setTimeout(r, ms));
+      let ack = null;
 
        RED.nodes.createNode(this,config);
        const node = this;
@@ -52,11 +53,19 @@ module.exports = function(RED) {
                msg1 = msg;
                sendMsg([null,msg]);
          });
+         ssi.onACK (function(_presentation) {
+           if(ack !== null) {
+              return ack;
+           } 
+         });
          // add wait for revision?
        }
 
        node.on('input', async function(msg) {
+           msg0.topic = msg.topic;
+           msg1.topic = msg.topic;
            node.send([null,null,msg0,msg1]);
+           if(typeof msg.payload !== 'undefined') ack = msg.payload;
        });
 
        setup();
