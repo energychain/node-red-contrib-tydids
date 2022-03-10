@@ -1,4 +1,4 @@
-module.exports = function(RED) {
+  module.exports = function(RED) {
     function ReceiverNode(config) {
       const TydidsP2P = require("tydids-p2p");
       const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -56,7 +56,7 @@ module.exports = function(RED) {
          ssi.onACK (function(_presentation) {
            if(ack !== null) {
               return ack;
-           } 
+           }
          });
          // add wait for revision?
        }
