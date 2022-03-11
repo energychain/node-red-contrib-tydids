@@ -62,10 +62,25 @@
        }
 
        node.on('input', async function(msg) {
-           msg0.topic = msg.topic;
-           msg1.topic = msg.topic;
-           node.send([null,null,msg0,msg1]);
-           if(typeof msg.payload !== 'undefined') ack = msg.payload;
+         if(typeof msg.config !== 'undefined') {
+           if(typeof msg.config.privateKey !== 'undefined') {
+             config.privateKey = msg.config.privateKey;
+           }
+           if(typeof msg.config.presentation !== 'undefined') {
+             config.address = msg.config.presentation;
+           }
+           if(typeof msg.config.address !== 'undefined') {
+             config.address = msg.config.address;
+           }
+           setup();
+         }
+         if(msg0 !== null) msg0.topic = msg.topic;
+         if(msg1 !== null) msg1.topic = msg.topic;
+         node.send([null,null,msg0,msg1]);
+         if(typeof msg.payload !== 'undefined') {
+           ack = msg.payload;
+           console.log('ack',ack);
+         }
        });
 
        setup();

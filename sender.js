@@ -2,6 +2,7 @@ module.exports = function(RED) {
     function SenderNode(config) {
        const TydidsP2P = require("tydids-p2p");
        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        let mappingRevisionMsg = {}
 
         RED.nodes.createNode(this,config);
         const node = this;
@@ -31,7 +32,14 @@ module.exports = function(RED) {
             }
           };
           ssi.onReceivedACK(function(from,did) {
-            node.send(did);
+            if(typeof mappingRevisionMsg[did.payload._revision] !== 'undefined') {
+                let msg = mappingRevisionMsg[did.payload._revision];
+                msg.payload = {
+                  send:msg.payload,
+                  received:did.payload
+                }
+                node.send(msg);
+            } 
             node.status({fill:'green',shape:"dot",text:ssi.identity.address});
           })
 
@@ -55,6 +63,7 @@ module.exports = function(RED) {
             } else {
               await ssi.updatePresentation(msg.payload);
             }
+            mappingRevisionMsg[ssi.node.revision]=msg;
             node.status({fill:'white',shape:"dot",text:ssi.identity.address});
         });
 
