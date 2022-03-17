@@ -10,8 +10,7 @@ module.exports = function(RED) {
         let ssi = null;
         let mc = null;
 
-        const setup = async function() {
-          const peers = ['https://webrtc.tydids.com/gun'];
+        const setup = async function() {        
           let privateKey = await storage.get("privateKey");
           if((typeof config.privateKey !== 'undefined')&&(config.privatKey !== null) &&(config.privateKey.length == 66)) {
             privateKey = config.privateKey;

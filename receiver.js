@@ -12,7 +12,6 @@
        let msg1 = null;
        const setup = async function() {
          node.status({fill:'yellow',shape:"dot",text:'initializing'});
-         const peers = ['https://webrtc.tydids.com/gun'];
          let privateKey = await storage.get("privateKey");
          if((typeof config.privateKey !== 'undefined')&&(config.privatKey !== null) &&(config.privateKey.length == 66)) {
            privateKey = config.privateKey;
@@ -22,7 +21,7 @@
            privateKey = wallet.privateKey;
            await storage.set("privateKey",privateKey);
          }
-         ssi = await TydidsP2P.ssi(privateKey);
+         ssi = await TydidsP2P.ssi(privateKey,true);
          storage.set("address",ssi.identity.address);
          storage.set("publicKey",ssi.identity.publicKey);
          let revision = await storage.get("revision");
