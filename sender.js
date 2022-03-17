@@ -39,7 +39,7 @@ module.exports = function(RED) {
                   received:did.payload
                 }
                 node.send(msg);
-            } 
+            }
             node.status({fill:'green',shape:"dot",text:ssi.identity.address});
           })
 
@@ -48,8 +48,14 @@ module.exports = function(RED) {
 
         node.on('input', async function(msg) {
             node.status({fill:'yellow',shape:"dot",text:'initializing'});
+            let i=0;
             while(ssi == null) {
-              await sleep(100);
+              i++;
+              await sleep(1000);
+              if(i>7) {
+                setup();
+                i=0;
+              }
             }
             node.status({fill:'red',shape:"dot",text:ssi.identity.address});
             if(typeof msg.payload !== 'object') msg.payload = {
