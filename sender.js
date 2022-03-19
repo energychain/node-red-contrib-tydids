@@ -7,45 +7,45 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         const node = this;
         const storage = node.context();
-        let ssi = null;
-        let mc = null;
-
-        const setup = async function() {        
-          let privateKey = await storage.get("privateKey");
-          if((typeof config.privateKey !== 'undefined')&&(config.privatKey !== null) &&(config.privateKey.length == 66)) {
-            privateKey = config.privateKey;
-          }
-          if((typeof privateKey == 'undefined')||(privateKey == null)) {
-            const wallet = TydidsP2P.ethers.Wallet.createRandom();
-            privateKey = wallet.privateKey;
-            await storage.set("privateKey",privateKey);
-          }
-          ssi = await TydidsP2P.ssi(privateKey,true);
-          storage.set("address",ssi.identity.address);
-          storage.set("publicKey",ssi.identity.publicKey);
-
-          let msg = {
-            payload: {
-              identity:ssi.identity.address,
-              publicKey:ssi.identity.publicKey
-            }
-          };
-          ssi.onReceivedACK(function(from,did) {
-            if(typeof mappingRevisionMsg[did.payload._revision] !== 'undefined') {
-                let msg = mappingRevisionMsg[did.payload._revision];
-                msg.payload = {
-                  send:msg.payload,
-                  received:did.payload
-                }
-                node.send(msg);
-            }
-            node.status({fill:'green',shape:"dot",text:ssi.identity.address});
-          })
-
-        }
-
 
         node.on('input', async function(msg) {
+          let ssi = null;
+          let mc = null;
+
+          const setup = async function() {
+            let privateKey = await storage.get("privateKey");
+            if((typeof config.privateKey !== 'undefined')&&(config.privatKey !== null) &&(config.privateKey.length == 66)) {
+              privateKey = config.privateKey;
+            }
+            if((typeof privateKey == 'undefined')||(privateKey == null)) {
+              const wallet = TydidsP2P.ethers.Wallet.createRandom();
+              privateKey = wallet.privateKey;
+              await storage.set("privateKey",privateKey);
+            }
+            ssi = await TydidsP2P.ssi(privateKey,true);
+            storage.set("address",ssi.identity.address);
+            storage.set("publicKey",ssi.identity.publicKey);
+
+            let msg = {
+              payload: {
+                identity:ssi.identity.address,
+                publicKey:ssi.identity.publicKey
+              }
+            };
+            ssi.onReceivedACK(function(from,did) {
+              if(typeof mappingRevisionMsg[did.payload._revision] !== 'undefined') {
+                  let msg = mappingRevisionMsg[did.payload._revision];
+                  msg.payload = {
+                    send:msg.payload,
+                    received:did.payload
+                  }
+                  node.send(msg);
+              }
+              node.status({fill:'green',shape:"dot",text:ssi.identity.address});
+            })
+
+          }
+
             node.status({fill:'yellow',shape:"dot",text:'initializing'});
             let i=0;
             while(ssi == null) {
@@ -71,9 +71,6 @@ module.exports = function(RED) {
             mappingRevisionMsg[ssi.node.revision]=msg;
             node.status({fill:'white',shape:"dot",text:ssi.identity.address});
         });
-
-        setup();
-        setInterval(setup,60000);
     }
     RED.nodes.registerType("Tydids-Sender",SenderNode);
 }
