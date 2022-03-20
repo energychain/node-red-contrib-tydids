@@ -24,7 +24,7 @@ module.exports = function(RED) {
           console.log("TyDIDs Version",ssi.version)
           storage.set("address",ssi.identity.address);
           storage.set("publicKey",ssi.identity.publicKey);
-          if(config.identity.length == 42) {
+          if((typeof config.identity !== 'undefined') && (config.identity !== null) && (config.identity.length == 42)) {
             ssi.setIdentifier(config.identity);
           }
           let msg = {
