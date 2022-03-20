@@ -24,7 +24,9 @@ module.exports = function(RED) {
           console.log("TyDIDs Version",ssi.version)
           storage.set("address",ssi.identity.address);
           storage.set("publicKey",ssi.identity.publicKey);
-
+          if(config.identity.length == 42) {
+            ssi.setIdentifier(config.identity);
+          }
           let msg = {
             payload: {
               identity:ssi.identity.address,
@@ -74,7 +76,6 @@ module.exports = function(RED) {
         });
 
         setup();
-        setInterval(setup,60000);
     }
     RED.nodes.registerType("Tydids-Sender",SenderNode);
 }

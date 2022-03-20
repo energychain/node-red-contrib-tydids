@@ -1,0 +1,146 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "367fc4c85792e260",
+        "type": "Tydids-Sender",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "address": "",
+        "privateKey": "",
+        "extendMode": true,
+        "x": 600,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4f204e2197b08cf7",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 260,
+        "wires": [
+            [
+                "367fc4c85792e260"
+            ]
+        ]
+    },
+    {
+        "id": "bb868723aecf7329",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "Present msg.payload P2P using a DID",
+        "info": "",
+        "x": 190,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "1a2e230bfba7d2fc",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "Retrieve presentation address after first inject",
+        "info": "",
+        "x": 690,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c8dec6d232e91d5b",
+        "type": "Tydids-Receiver",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "address": "",
+        "privateKey": "",
+        "x": 120,
+        "y": 440,
+        "wires": [
+            [
+                "840d7486da7e2714"
+            ],
+            [
+                "b191cb4b7eec77ff"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "840d7486da7e2714",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Payload only",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "b191cb4b7eec77ff",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Full DID of presentation",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "64dca42e713cc236",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "Set Address of Presentation to subscribe",
+        "info": "",
+        "x": 200,
+        "y": 380,
+        "wires": []
+    }
+]
