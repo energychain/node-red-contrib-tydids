@@ -20,7 +20,12 @@ module.exports = function(RED) {
             privateKey = wallet.privateKey;
             await storage.set("privateKey",privateKey);
           }
-          ssi = await TydidsP2P.ssi(privateKey,true);
+          if(typeof RED.tydids_gun == 'undefined') {
+              ssi = await TydidsP2P.ssi(privateKey,true);
+              RED.tydids_gun = ssi.gun;
+          } else {
+            ssi = await TydidsP2P.ssi(privateKey,true,RED.tydids_gun);
+          }
           console.log("TyDIDs Version",ssi.version)
           storage.set("address",ssi.identity.address);
           storage.set("publicKey",ssi.identity.publicKey);
