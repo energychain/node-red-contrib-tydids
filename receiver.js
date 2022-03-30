@@ -21,12 +21,7 @@
            privateKey = wallet.privateKey;
            await storage.set("privateKey",privateKey);
          }
-         if(typeof RED.tydids_gun == 'undefined') {
-             ssi = await TydidsP2P.ssi(privateKey,true);
-             RED.tydids_gun = ssi.gun;
-         } else {
-           ssi = await TydidsP2P.ssi(privateKey,true,RED.tydids_gun);
-         }
+         ssi = await TydidsP2P.ssi(privateKey,true);         
          storage.set("address",ssi.identity.address);
          storage.set("publicKey",ssi.identity.publicKey);
          let revision = await storage.get("revision");

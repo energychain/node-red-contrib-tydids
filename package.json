@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/energychain/node-red-contrib-tydids#readme",
   "dependencies": {
-    "tydids-p2p": "^1.2.8"
+    "tydids-p2p": "^1.2.99-build1"
   },
   "engines": {
     "node": "^12.0.0 || ^14.0.0 || >=16.0.0"
