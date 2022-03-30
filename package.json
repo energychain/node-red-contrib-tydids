@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-tydids",
-  "version": "1.2.99build1",
+  "version": "1.2.99build2",
   "description": "TyDIDs-P2P Communication using Decentralized Identity Presentations for edge to edge data exchange.",
   "main": "tydids.js",
   "scripts": {
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/energychain/node-red-contrib-tydids#readme",
   "dependencies": {
-    "tydids-p2p": "^1.2.99-build1"
+    "tydids-p2p": "^1.2.99-build4"
   },
   "engines": {
     "node": "^12.0.0 || ^14.0.0 || >=16.0.0"
