@@ -19,7 +19,7 @@ module.exports = function(RED) {
               privateKey = wallet.privateKey;
               await storage.set("privateKey",privateKey);
             }
-            ssi = await TydidsP2P.ssi(privateKey,true);
+            ssi = await TydidsP2P.ssi(privateKey);
             storage.set("address",ssi.identity.address);
             storage.set("publicKey",ssi.identity.publicKey);
 
