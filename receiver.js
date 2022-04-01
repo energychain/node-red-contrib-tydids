@@ -26,8 +26,6 @@
          storage.set("publicKey",ssi.identity.publicKey);
          let revision = await storage.get("revision");
 
-         let did = await ssi.retrievePresentation(config.address);
-
          const sendMsg = async function(_msg) {
              let lastValue = JSON.stringify(await storage.get("lastValue"));
              if(lastValue !== JSON.stringify(_msg)) {
@@ -57,7 +55,8 @@
               return ack;
            }
          });
-         // add wait for revision?
+         let did = await ssi.retrievePresentation(config.address);
+         node.status({fill:'green',shape:"dot",text:new Date().toUTCString()});
        }
 
        node.on('input', async function(msg) {
