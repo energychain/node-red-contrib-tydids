@@ -21,17 +21,10 @@
            privateKey = wallet.privateKey;
            await storage.set("privateKey",privateKey);
          }
-         if(typeof RED.tydids_gun == 'undefined') {
-             ssi = await TydidsP2P.ssi(privateKey,true);
-             RED.tydids_gun = ssi.gun;
-         } else {
-           ssi = await TydidsP2P.ssi(privateKey,true,RED.tydids_gun);
-         }
+         ssi = await TydidsP2P.ssi(privateKey);
          storage.set("address",ssi.identity.address);
          storage.set("publicKey",ssi.identity.publicKey);
          let revision = await storage.get("revision");
-
-         let did = await ssi.retrievePresentation(config.address);
 
          const sendMsg = async function(_msg) {
              let lastValue = JSON.stringify(await storage.get("lastValue"));
@@ -62,7 +55,8 @@
               return ack;
            }
          });
-         // add wait for revision?
+         let did = await ssi.retrievePresentation(config.address);
+         node.status({fill:'green',shape:"dot",text:new Date().toUTCString()});
        }
 
        node.on('input', async function(msg) {
