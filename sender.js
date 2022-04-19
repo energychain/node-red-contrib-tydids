@@ -49,6 +49,7 @@ module.exports = function(RED) {
 
 
         node.on('input', async function(msg) {
+            let res = {};
             node.status({fill:'yellow',shape:"dot",text:'initializing'});
             let i=0;
             while(ssi == null) {
@@ -69,10 +70,11 @@ module.exports = function(RED) {
             ) {
               await ssi.replyPresentation(msg.payload._address,msg.payload._revision,msg.payload);
             } else {
-              await ssi.updatePresentation(msg.payload);
+              res = await ssi.updatePresentation(msg.payload);
             }
             mappingRevisionMsg[ssi.node.revision]=msg;
-            node.status({fill:'white',shape:"dot",text:ssi.identity.address});
+            node.status({fill:'green',shape:"dot",text:ssi.identity.address});
+            node.send({payload:res});
         });
 
         setup();
