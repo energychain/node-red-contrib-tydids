@@ -71,6 +71,7 @@ module.exports = function(RED) {
               await ssi.replyPresentation(msg.payload._address,msg.payload._revision,msg.payload);
             } else {
               res = await ssi.updatePresentation(msg.payload);
+              res.payload = msg.payload;
             }
             mappingRevisionMsg[ssi.node.revision]=msg;
             node.status({fill:'green',shape:"dot",text:ssi.identity.address});
